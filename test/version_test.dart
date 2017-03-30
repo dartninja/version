@@ -9,7 +9,10 @@ void main() {
       zeroOneZero,
       oneZeroZero,
       fiveZeroFive,
-      oneZeroZeroDuplicate, buildVersion, preReleaseVersion, buildAndPrereleaseVersion;
+      oneZeroZeroDuplicate,
+      buildVersion,
+      preReleaseVersion,
+      buildAndPrereleaseVersion;
 
   setUp(() {
     zeroZeroOne = new Version(0, 0, 1);
@@ -19,9 +22,10 @@ void main() {
     fiveZeroFive = new Version(5, 0, 5);
     oneZeroZeroDuplicate = new Version(1, 0, 0);
 
-    buildVersion = new Version(1,0,0, build: "buildNumber");
-    preReleaseVersion = new Version(1,0,0, preRelease: ["alpha"]);
-    buildAndPrereleaseVersion = new Version(1,0,0,preRelease: ["alpha"], build: "anotherBuild");
+    buildVersion = new Version(1, 0, 0, build: "buildNumber");
+    preReleaseVersion = new Version(1, 0, 0, preRelease: ["alpha"]);
+    buildAndPrereleaseVersion =
+        new Version(1, 0, 0, preRelease: ["alpha"], build: "anotherBuild");
   });
 
   test('== tests', () {
@@ -36,15 +40,15 @@ void main() {
     expect(fiveZeroFive == fiveZeroFive, isTrue);
     expect(oneZeroZero == oneZeroZeroDuplicate, isTrue);
 
-    expect(buildVersion==oneZeroZero, isTrue);
-    expect(preReleaseVersion==oneZeroZero, isFalse);
-    expect(buildVersion==buildVersion, isTrue);
-    expect(preReleaseVersion==preReleaseVersion, isTrue);
+    expect(buildVersion == oneZeroZero, isTrue);
+    expect(preReleaseVersion == oneZeroZero, isFalse);
+    expect(buildVersion == buildVersion, isTrue);
+    expect(preReleaseVersion == preReleaseVersion, isTrue);
 
-    expect(buildAndPrereleaseVersion==preReleaseVersion, isTrue);
-    expect(buildAndPrereleaseVersion==buildVersion, isFalse);
-    expect(buildAndPrereleaseVersion==oneZeroZero, isFalse);
-    expect(buildAndPrereleaseVersion==buildAndPrereleaseVersion, isTrue );
+    expect(buildAndPrereleaseVersion == preReleaseVersion, isTrue);
+    expect(buildAndPrereleaseVersion == buildVersion, isFalse);
+    expect(buildAndPrereleaseVersion == oneZeroZero, isFalse);
+    expect(buildAndPrereleaseVersion == buildAndPrereleaseVersion, isTrue);
   });
 
   test('> tests', () {
@@ -64,25 +68,25 @@ void main() {
     expect(fiveZeroFive > fiveZeroFive, isFalse);
     expect(oneZeroZero > oneZeroZeroDuplicate, isFalse);
 
-    expect(buildVersion>oneZeroZero, isFalse);
-    expect(oneZeroZero>buildVersion, isFalse);
+    expect(buildVersion > oneZeroZero, isFalse);
+    expect(oneZeroZero > buildVersion, isFalse);
 
-    expect(preReleaseVersion>oneZeroZero, isFalse);
-    expect(oneZeroZero>preReleaseVersion, isTrue);
+    expect(preReleaseVersion > oneZeroZero, isFalse);
+    expect(oneZeroZero > preReleaseVersion, isTrue);
 
-    expect(buildVersion>buildVersion, isFalse);
-    expect(preReleaseVersion>preReleaseVersion, isFalse);
+    expect(buildVersion > buildVersion, isFalse);
+    expect(preReleaseVersion > preReleaseVersion, isFalse);
 
-    expect(buildAndPrereleaseVersion>preReleaseVersion, isFalse);
-    expect(preReleaseVersion>buildAndPrereleaseVersion, isFalse);
+    expect(buildAndPrereleaseVersion > preReleaseVersion, isFalse);
+    expect(preReleaseVersion > buildAndPrereleaseVersion, isFalse);
 
-    expect(buildAndPrereleaseVersion>buildVersion, isFalse);
-    expect(buildVersion>buildAndPrereleaseVersion, isTrue);
+    expect(buildAndPrereleaseVersion > buildVersion, isFalse);
+    expect(buildVersion > buildAndPrereleaseVersion, isTrue);
 
-    expect(buildAndPrereleaseVersion>oneZeroZero, isFalse);
-    expect(oneZeroZero>buildAndPrereleaseVersion, isTrue);
+    expect(buildAndPrereleaseVersion > oneZeroZero, isFalse);
+    expect(oneZeroZero > buildAndPrereleaseVersion, isTrue);
 
-    expect(buildAndPrereleaseVersion>buildAndPrereleaseVersion, isFalse);
+    expect(buildAndPrereleaseVersion > buildAndPrereleaseVersion, isFalse);
   });
 
   test('< tests', () {
@@ -102,23 +106,22 @@ void main() {
     expect(fiveZeroFive < fiveZeroFive, isFalse);
     expect(oneZeroZero < oneZeroZeroDuplicate, isFalse);
 
+    expect(buildVersion < oneZeroZero, isFalse);
+    expect(oneZeroZero < buildVersion, isFalse);
 
-    expect(buildVersion<oneZeroZero, isFalse);
-    expect(oneZeroZero<buildVersion, isFalse);
+    expect(preReleaseVersion < oneZeroZero, isTrue);
+    expect(oneZeroZero < preReleaseVersion, isFalse);
 
-    expect(preReleaseVersion<oneZeroZero, isTrue);
-    expect(oneZeroZero<preReleaseVersion, isFalse);
+    expect(buildVersion < buildVersion, isFalse);
+    expect(preReleaseVersion < preReleaseVersion, isFalse);
 
-    expect(buildVersion<buildVersion, isFalse);
-    expect(preReleaseVersion<preReleaseVersion, isFalse);
-
-    expect(buildAndPrereleaseVersion<preReleaseVersion, isFalse);
-    expect(preReleaseVersion<buildAndPrereleaseVersion, isFalse);
-    expect(buildAndPrereleaseVersion<buildVersion, isTrue);
-    expect(buildVersion<buildAndPrereleaseVersion, isFalse);
-    expect(buildAndPrereleaseVersion<oneZeroZero, isTrue);
-    expect(oneZeroZero<buildAndPrereleaseVersion, isFalse);
-    expect(buildAndPrereleaseVersion<buildAndPrereleaseVersion, isFalse);
+    expect(buildAndPrereleaseVersion < preReleaseVersion, isFalse);
+    expect(preReleaseVersion < buildAndPrereleaseVersion, isFalse);
+    expect(buildAndPrereleaseVersion < buildVersion, isTrue);
+    expect(buildVersion < buildAndPrereleaseVersion, isFalse);
+    expect(buildAndPrereleaseVersion < oneZeroZero, isTrue);
+    expect(oneZeroZero < buildAndPrereleaseVersion, isFalse);
+    expect(buildAndPrereleaseVersion < buildAndPrereleaseVersion, isFalse);
   });
 
   test('<= tests', () {
@@ -138,22 +141,22 @@ void main() {
     expect(fiveZeroFive <= fiveZeroFive, isTrue);
     expect(oneZeroZero <= oneZeroZeroDuplicate, isTrue);
 
-    expect(buildVersion<=oneZeroZero, isTrue);
-    expect(oneZeroZero<=buildVersion, isTrue);
+    expect(buildVersion <= oneZeroZero, isTrue);
+    expect(oneZeroZero <= buildVersion, isTrue);
 
-    expect(preReleaseVersion<=oneZeroZero, isTrue);
-    expect(oneZeroZero<=preReleaseVersion, isFalse);
+    expect(preReleaseVersion <= oneZeroZero, isTrue);
+    expect(oneZeroZero <= preReleaseVersion, isFalse);
 
-    expect(buildVersion<=buildVersion, isTrue);
-    expect(preReleaseVersion<=preReleaseVersion, isTrue);
+    expect(buildVersion <= buildVersion, isTrue);
+    expect(preReleaseVersion <= preReleaseVersion, isTrue);
 
-    expect(buildAndPrereleaseVersion<=preReleaseVersion, isTrue );
-    expect(preReleaseVersion<=buildAndPrereleaseVersion, isTrue);
-    expect(buildAndPrereleaseVersion<=buildVersion, isTrue);
-    expect(buildVersion<=buildAndPrereleaseVersion, isFalse);
-    expect(buildAndPrereleaseVersion<=oneZeroZero, isTrue);
-    expect(oneZeroZero<=buildAndPrereleaseVersion, isFalse);
-    expect(buildAndPrereleaseVersion<=buildAndPrereleaseVersion, isTrue);
+    expect(buildAndPrereleaseVersion <= preReleaseVersion, isTrue);
+    expect(preReleaseVersion <= buildAndPrereleaseVersion, isTrue);
+    expect(buildAndPrereleaseVersion <= buildVersion, isTrue);
+    expect(buildVersion <= buildAndPrereleaseVersion, isFalse);
+    expect(buildAndPrereleaseVersion <= oneZeroZero, isTrue);
+    expect(oneZeroZero <= buildAndPrereleaseVersion, isFalse);
+    expect(buildAndPrereleaseVersion <= buildAndPrereleaseVersion, isTrue);
   });
 
   test('>= tests', () {
@@ -173,25 +176,25 @@ void main() {
     expect(fiveZeroFive >= fiveZeroFive, isTrue);
     expect(oneZeroZero >= oneZeroZeroDuplicate, isTrue);
 
-    expect(buildVersion>=oneZeroZero, isTrue);
-    expect(oneZeroZero>=buildVersion, isTrue);
+    expect(buildVersion >= oneZeroZero, isTrue);
+    expect(oneZeroZero >= buildVersion, isTrue);
 
-    expect(preReleaseVersion>=oneZeroZero, isFalse);
-    expect(oneZeroZero>=preReleaseVersion, isTrue);
+    expect(preReleaseVersion >= oneZeroZero, isFalse);
+    expect(oneZeroZero >= preReleaseVersion, isTrue);
 
-    expect(buildVersion>=buildVersion, isTrue);
-    expect(preReleaseVersion>=preReleaseVersion, isTrue);
+    expect(buildVersion >= buildVersion, isTrue);
+    expect(preReleaseVersion >= preReleaseVersion, isTrue);
 
-    expect(buildAndPrereleaseVersion>=preReleaseVersion, isTrue);
-    expect(preReleaseVersion>=buildAndPrereleaseVersion, isTrue);
+    expect(buildAndPrereleaseVersion >= preReleaseVersion, isTrue);
+    expect(preReleaseVersion >= buildAndPrereleaseVersion, isTrue);
 
-    expect(buildAndPrereleaseVersion>=buildVersion, isFalse);
-    expect(buildVersion>=buildAndPrereleaseVersion, isTrue);
+    expect(buildAndPrereleaseVersion >= buildVersion, isFalse);
+    expect(buildVersion >= buildAndPrereleaseVersion, isTrue);
 
-    expect(buildAndPrereleaseVersion>=oneZeroZero, isFalse);
-    expect(oneZeroZero>=buildAndPrereleaseVersion, isTrue);
+    expect(buildAndPrereleaseVersion >= oneZeroZero, isFalse);
+    expect(oneZeroZero >= buildAndPrereleaseVersion, isTrue);
 
-    expect(buildAndPrereleaseVersion>=buildAndPrereleaseVersion, isTrue);
+    expect(buildAndPrereleaseVersion >= buildAndPrereleaseVersion, isTrue);
   });
 
   test("Validation tests", () {
@@ -204,6 +207,12 @@ void main() {
     expect(() => new Version(0, 0, 0), throwsArgumentError);
     expect(() => new Version(1, 0, 0, build: null), throwsArgumentError);
     expect(() => new Version(1, 0, 0, preRelease: null), throwsArgumentError);
+    expect(() => new Version(1, 0, 0, preRelease: [null]), throwsArgumentError);
+    expect(() => new Version(1, 0, 0, preRelease: [""]), throwsArgumentError);
+    expect(() => new Version(1, 0, 0, preRelease: ["not^safe"]),
+        throwsFormatException);
+    expect(
+        () => new Version(1, 0, 0, build: "not^safe"), throwsFormatException);
   });
 
   test("Parse tests", () {
@@ -222,9 +231,21 @@ void main() {
         Version.parse("1.0.0-alpha+build"),
         equals(new Version(1, 0, 0,
             build: "build", preRelease: <String>["alpha"])));
+    expect(
+        Version.parse("1.0.0-alpha.beta+build"),
+        equals(new Version(1, 0, 0,
+            build: "build", preRelease: <String>["alpha", "beta"])));
+
+    expect(
+        Version.parse("1.0.0-az.AZ.12-3+az.AZ.12-3"),
+        equals(new Version(1, 0, 0,
+            build: "az.AZ.12-3", preRelease: <String>["az", "AZ", "12-3"])));
+
     expect(() => Version.parse("a"), throwsFormatException);
     expect(() => Version.parse("123,4322"), throwsFormatException);
     expect(() => Version.parse("123a"), throwsFormatException);
+    expect(() => Version.parse("1.0.0+not^safe"), throwsFormatException);
+    expect(() => Version.parse("1.0.0-not^safe"), throwsFormatException);
   });
 
   test("Increment tests", () {
@@ -248,6 +269,14 @@ void main() {
     expect(new Version(1, 1, 1).toString(), equals("1.1.1"));
     expect(new Version(1, 0, 1).toString(), equals("1.0.1"));
     expect(new Version(001, 000, 0010).toString(), equals("1.0.10"));
+    expect(
+        new Version(1, 1, 1, build: "alpha").toString(), equals("1.1.1+alpha"));
+    expect(new Version(1, 1, 1, preRelease: ["alpha", "omega"]).toString(),
+        equals("1.1.1-alpha.omega"));
+    expect(
+        new Version(1, 1, 1, build: "alpha", preRelease: ["beta", "gamma"])
+            .toString(),
+        equals("1.1.1-beta.gamma+alpha"));
   });
 
   test("Pre-release precedence test", () {
@@ -276,6 +305,5 @@ void main() {
     expect(e > f, isFalse);
     expect(f > g, isFalse);
     expect(g > h, isFalse);
-
   });
 }

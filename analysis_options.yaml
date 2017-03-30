@@ -50,7 +50,7 @@ linter:
     - prefer_final_fields
     - prefer_final_locals
     - prefer_is_not_empty
-    #- public_member_api_docs
+    - public_member_api_docs
     - slash_for_doc_comments
     - sort_constructors_first
     - sort_unnamed_constructors_first

@@ -1,6 +1,6 @@
 name: version
 description: Provides a simple class for parsing and comparing semantic versions as defined by http://semver.org/
-version: 1.0.1
+version: 1.0.2
 homepage: https://github.com/dartalog/version_dart
 author: Matthew Barbour <sanmadjack@gmail.com>
 

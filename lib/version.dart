@@ -4,9 +4,12 @@
 /// Provides version objects to enforce conformance to the Semantic Versioning 2.0 spec. The spec can be read at http://semver.org/
 library version;
 
+/// Provides immutable storage and comparison of semantic version numbers.
 class Version {
   static final RegExp _versionRegex =
       new RegExp(r"^([\d\.]+)(\-([0-9A-Za-z\-\.]+))?(\+([0-9A-Za-z\-\.]+))?$");
+  static final RegExp _buildRegex = new RegExp(r"^[0-9A-Za-z\-\.]+$");
+  static final RegExp _preReleaseRegex = new RegExp(r"^[0-9A-Za-z\-]+$");
 
   /// The major number of the version, incremented when making breaking changes.
   final int major;
@@ -25,9 +28,10 @@ class Version {
   /// Creates a new instance of [Version].
   ///
   /// [major], [minor], and [patch] are all required, all must be greater than 0 and not null, and at least one must be greater than 0.
-  /// [preRelease] is optional, but if specified must be a [List] of [String] and must not be null.
-  /// [build] is optional, but if specified must be a [String]. must contain only , and must not be null.
-  /// Throes an [ArgumentError] if any of these conditions are violated.
+  /// [preRelease] is optional, but if specified must be a [List] of [String] and must not be null. Each element in the list represents one of the period-separated segments of the pre-release information, and may only contain [0-9A-Za-z-].
+  /// [build] is optional, but if specified must be a [String]. must contain only [0-9A-Za-z-.], and must not be null.
+  /// Throws a [FormatException] if the [String] content does not follow the character constraints defined above.
+  /// Throes an [ArgumentError] if any of the other conditions are violated.
   Version(this.major, this.minor, this.patch,
       {List<String> preRelease: const <String>[], this.build: ""})
       : _preRelease = preRelease {
@@ -36,7 +40,21 @@ class Version {
     if (this.patch == null) throw new ArgumentError("patch must not be null");
     if (this._preRelease == null)
       throw new ArgumentError("preRelease must not be null");
+    for (int i = 0; i < _preRelease.length; i++) {
+      if (_preRelease[i] == null ||
+          _preRelease[i].toString().trim().length == 0)
+        throw new ArgumentError(
+            "preRelease semgents must not be null or empty");
+      // Just in case
+      _preRelease[i] = _preRelease[i].toString();
+      if (!_preReleaseRegex.hasMatch(_preRelease[i]))
+        throw new FormatException(
+            "preRelease segments must only contain [0-9A-Za-z-]");
+    }
     if (this.build == null) throw new ArgumentError("build must not be null");
+    if (this.build.length > 0 && !_buildRegex.hasMatch(this.build)) {
+      throw new FormatException("build must only contain [0-9A-Za-z-.]");
+    }
 
     if (major < 0 || minor < 0 || patch < 0) {
       throw new ArgumentError("Version numbers must be greater than 0");
@@ -50,41 +68,59 @@ class Version {
   @override
   int get hashCode {
     int hash = 1;
-    hash = hash * 17 + major;
-    hash = hash * 23 + minor;
-    hash = hash * 13 + patch;
-    // TODO: hash up the other version elements
+    hash += hash * 7 + major;
+    hash = hash * 7 + minor;
+    hash = hash * 7 + patch;
+    hash = hash * 7 + build.hashCode;
+    for(String seg in _preRelease) {
+      hash = hash * 7 + seg.hashCode;
+    }
+    // TODO: Re-implement this to ensure it never overflows
     return hash;
   }
 
   /// Pre-release information segments.
   List<String> get preRelease => new List<String>.from(_preRelease);
 
+  /// Determines whether the left-hand [Version] represents a lower precedence than the right-hand [Version].
   bool operator <(dynamic o) => o is Version && _compare(this, o) < 0;
 
+  /// Determines whether the left-hand [Version] represents an equal or lower precedence than the right-hand [Version].
   bool operator <=(dynamic o) => o is Version && _compare(this, o) <= 0;
 
+  /// Determines whether the left-hand [Version] represents an equal precedence to the right-hand [Version].
   @override
   bool operator ==(dynamic o) => o is Version && _compare(this, o) == 0;
 
+  /// Determines whether the left-hand [Version] represents a greater precedence than the right-hand [Version].
   bool operator >(dynamic o) => o is Version && _compare(this, o) > 0;
 
+  /// Determines whether the left-hand [Version] represents an equal or greater precedence than the right-hand [Version].
   bool operator >=(dynamic o) => o is Version && _compare(this, o) >= 0;
 
-  /// Increments the [major] version number.
+  /// Creates a new [Version] with the [major] version number incremented.
   ///
   /// Also resets the [minor] and [patch] numbers to 0, and clears the [build] and [preRelease] information.
   Version incrementMajor() => new Version(this.major + 1, 0, 0);
-  /// Increments the [minor] version number.
+
+  /// Creates a new [Version] with the [minor] version number incremented.
   ///
   /// Also resets the [patch] number to 0, and clears the [build] and [preRelease] information.
   Version incrementMinor() => new Version(this.major, this.minor + 1, 0);
-  /// Increments the [patch] version number.
+
+  /// Creates a new [Version] with the [patch] version number incremented.
   ///
   /// Also clears the [build] and [preRelease] information.
   Version incrementPatch() =>
       new Version(this.major, this.minor, this.patch + 1);
 
+  /// Returns a [String] representation of the [Version].
+  ///
+  /// Uses the format "$major.$minor.$patch".
+  /// If [preRelease] has segments available they are appended as "-segmentOne.segmentTwo", with each segment separated by a period.
+  /// If [build] is specified, it is appended as "+build.info" where "build.info" is whatever value [build] is set to.
+  /// If all [preRelease] and [build] are specified, then both are appended, [preRelease] first and [build] second.
+  /// An example of such output would be "1.0.0-preRelease.segment+build.info".
   @override
   String toString() {
     final StringBuffer output = new StringBuffer("$major.$minor.$patch");
@@ -95,13 +131,6 @@ class Version {
       output.write("+${build.trim()}");
     }
     return output.toString();
-  }
-
-  static bool _isNumeric(String s) {
-    if (s == null) {
-      return false;
-    }
-    return double.parse(s, (dynamic e) => null) != null;
   }
 
   /// Creates a [Version] instance from a string.
@@ -193,5 +222,12 @@ class Version {
       }
     }
     return 0;
+  }
+
+  static bool _isNumeric(String s) {
+    if (s == null) {
+      return false;
+    }
+    return double.parse(s, (dynamic e) => null) != null;
   }
 }
