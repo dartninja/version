@@ -29,7 +29,7 @@ class Version {
   /// [build] is optional, but if specified must be a [String]. must contain only , and must not be null.
   /// Throes an [ArgumentError] if any of these conditions are violated.
   Version(this.major, this.minor, this.patch,
-      {List<String> preRelease = const <String>[], this.build = ""})
+      {List<String> preRelease: const <String>[], this.build: ""})
       : _preRelease = preRelease {
     if (this.major == null) throw new ArgumentError("major must not be null");
     if (this.minor == null) throw new ArgumentError("minor must not be null");
