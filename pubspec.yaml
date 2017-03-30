@@ -1,0 +1,10 @@
+name: version
+description: Provides a simple class for parsing and comparing semantic versions as defined by http://semver.org/
+version: 1.0.0
+homepage: https://www.example.com
+author: Matthew Barbour <sanmadjack@gmail.com>
+
+environment:
+  sdk: '>=1.12.0 <2.0.0'
+dev_dependencies:
+  test: ^0.12.0
