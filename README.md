@@ -1,6 +1,16 @@
 # version
+[![version 1.0.2](https://img.shields.io/badge/pub-1.0.2-brightgreen.svg)](https://pub.dartlang.org/packages/version)
+[![build status](https://api.travis-ci.org/dartalog/version_dart.svg)](https://travis-ci.org/dartalog/version_dart)
 
 A dart library providing a Version object for comparing and incrementing version numbers in compliance with the Semantic Versioning spec at http://semver.org/
+
+# Installation
+In your `pubspec.yaml`:
+
+```yaml
+dependencies:
+  version: ^1.0.0
+```
 
 ## Usage
 
