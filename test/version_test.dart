@@ -24,8 +24,8 @@ void main() {
 
     buildVersion = new Version(1, 0, 0, build: "buildNumber");
     preReleaseVersion = new Version(1, 0, 0, preRelease: <String>["alpha"]);
-    buildAndPrereleaseVersion =
-    new Version(1, 0, 0, preRelease: <String>["alpha"], build: "anotherBuild");
+    buildAndPrereleaseVersion = new Version(1, 0, 0,
+        preRelease: <String>["alpha"], build: "anotherBuild");
   });
 
   test('== tests', () {
@@ -277,9 +277,8 @@ void main() {
         new Version(1, 1, 1, preRelease: <String>["alpha", "omega"]).toString(),
         equals("1.1.1-alpha.omega"));
     expect(
-        new Version(
-            1, 1, 1, build: "alpha", preRelease: <String>["beta", "gamma"])
-            .toString(),
+        new Version(1, 1, 1,
+            build: "alpha", preRelease: <String>["beta", "gamma"]).toString(),
         equals("1.1.1-beta.gamma+alpha"));
   });
 
