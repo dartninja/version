@@ -12,7 +12,7 @@ pub get
 
 # Verify that the libraries are error and warning-free.
 echo "Running dartanalyzer..."
-dartanalyzer $DARTANALYZER_FLAGS bin/version.dart
+dartanalyzer $DARTANALYZER_FLAGS lib/version.dart
 
 # Verify that dartfmt has been run.
 echo "Checking dartfmt..."
