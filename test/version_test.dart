@@ -243,6 +243,7 @@ void main() {
         equals(new Version(1, 0, 0,
             build: "az.AZ.12-3", preRelease: <String>["az", "AZ", "12-3"])));
 
+    expect(() => Version.parse(null), throwsFormatException);
     expect(() => Version.parse("a"), throwsFormatException);
     expect(() => Version.parse("123,4322"), throwsFormatException);
     expect(() => Version.parse("123a"), throwsFormatException);
@@ -283,30 +284,72 @@ void main() {
   });
 
   test("Pre-release precedence test", () {
-    // TODO: Implement 1.0.0-alpha < 1.0.0-alpha.1 < 1.0.0-alpha.beta < 1.0.0-beta < 1.0.0-beta.2 < 1.0.0-beta.11 < 1.0.0-rc.1 < 1.0.0
-    final Version a = Version.parse("1.0.0-alpha");
-    final Version b = Version.parse("1.0.0-alpha.1");
-    final Version c = Version.parse("1.0.0-alpha.beta");
-    final Version d = Version.parse("1.0.0-beta");
-    final Version e = Version.parse("1.0.0-beta.2");
-    final Version f = Version.parse("1.0.0-beta.11");
-    final Version g = Version.parse("1.0.0-rc.1");
-    final Version h = Version.parse("1.0.0");
+    // 1.0.0-alpha < 1.0.0-alpha.1 < 1.0.0-alpha.beta < 1.0.0-beta < 1.0.0-beta.2 < 1.0.0-beta.11 < 1.0.0-rc.1 < 1.0.0
+    final List<Version> versions = <Version>[
+      zeroZeroOne,
+      zeroOneZero,
+      Version.parse("1.0.0-alpha"),
+      Version.parse("1.0.0-alpha.1"),
+      Version.parse("1.0.0-alpha.beta"),
+      Version.parse("1.0.0-beta"),
+      Version.parse("1.0.0-beta.2"),
+      Version.parse("1.0.0-beta.11"),
+      Version.parse("1.0.0-rc.1"),
+      Version.parse("1.0.0"),
+      fiveZeroFive
+    ];
+    for (int i = 0; i < versions.length; i++) {
+      final Version version = versions[i];
+      for (int j = 0; j <= i; j++) {
+        final Version otherVersion = versions[j];
+        expect(version >= otherVersion, isTrue,
+            reason:
+                "$version should be greater than or equal to $otherVersion");
+        if (j == i) {
+          expect(version > otherVersion, isFalse,
+              reason: "$version should be equal to $otherVersion");
+          expect(version < otherVersion, isFalse,
+              reason: "$version should be equal to $otherVersion");
+          expect(version == otherVersion, isTrue,
+              reason: "$version should be equal to $otherVersion");
+          expect(version <= otherVersion, isTrue,
+              reason: "$version should be equal to $otherVersion");
+        } else {
+          expect(version > otherVersion, isTrue,
+              reason: "$version should be greater than $otherVersion");
+          expect(version < otherVersion, isFalse,
+              reason: "$version should be greater than $otherVersion");
+          expect(version == otherVersion, isFalse,
+              reason: "$version should be greater than $otherVersion");
+          expect(version <= otherVersion, isFalse,
+              reason: "$version should be greater than $otherVersion");
+        }
+      }
 
-    expect(a < b, isTrue);
-    expect(b < c, isTrue);
-    expect(c < d, isTrue);
-    expect(d < e, isTrue);
-    expect(e < f, isTrue);
-    expect(f < g, isTrue);
-    expect(g < h, isTrue);
-
-    expect(a > b, isFalse);
-    expect(b > c, isFalse);
-    expect(c > d, isFalse);
-    expect(d > e, isFalse);
-    expect(e > f, isFalse);
-    expect(f > g, isFalse);
-    expect(g > h, isFalse);
+      for (int j = i; j < versions.length; j++) {
+        final Version otherVersion = versions[j];
+        expect(version <= otherVersion, isTrue,
+            reason: "$version should be less than or equal to $otherVersion");
+        if (j == i) {
+          expect(version > otherVersion, isFalse,
+              reason: "$version should be equal to $otherVersion");
+          expect(version < otherVersion, isFalse,
+              reason: "$version should be equal to $otherVersion");
+          expect(version == otherVersion, isTrue,
+              reason: "$version should be equal to $otherVersion");
+          expect(version >= otherVersion, isTrue,
+              reason: "$version should be equal to $otherVersion");
+        } else {
+          expect(version > otherVersion, isFalse,
+              reason: "$version should be less than $otherVersion");
+          expect(version < otherVersion, isTrue,
+              reason: "$version should be less than $otherVersion");
+          expect(version == otherVersion, isFalse,
+              reason: "$version should be less than $otherVersion");
+          expect(version >= otherVersion, isFalse,
+              reason: "$version should be less than $otherVersion");
+        }
+      }
+    }
   });
 }
