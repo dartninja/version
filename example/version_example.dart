@@ -4,14 +4,15 @@
 import 'package:version/version.dart';
 
 void main() {
-  Version currentVersion = new Version(1, 0, 3);
-  Version latestVersion = Version.parse("2.1.0");
+  final Version currentVersion = new Version(1, 0, 3);
+  final Version latestVersion = Version.parse("2.1.0");
 
   if (latestVersion > currentVersion) {
     print("Update is available");
   }
 
-  Version betaVersion = new Version(2, 1, 0, preRelease: ["beta"]);
+  final Version betaVersion = new Version(
+      2, 1, 0, preRelease: <String>["beta"]);
   // Note: this test will return false, as pre-release versions are considered
   // lesser then a non-pre-release version that otherwise has the same numbers.
   if (betaVersion > latestVersion) {

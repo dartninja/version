@@ -1,17 +1,5 @@
 analyzer:
-  strong-mode:
-    - implicit-downcasts: false
-    - implicit-dynamic: false
-  exclude:
-    - lib/client/api/src/item.dart
-  errors:
-    todo: ignore
-    unused_import: info
-    missing_return: error
-    invalid_assignment: error
-    unused_local_variable: warning
-    dead_code: error
-
+  strong-mode: true
 linter:
   rules:
     - always_declare_return_types
@@ -60,7 +48,6 @@ linter:
     - type_annotate_public_apis
     - type_init_formals
     - unawaited_futures
-    - unnecessary_brace_in_string_interp
     - unnecessary_getters_setters
     - unrelated_type_equality_checks
     - valid_regexps
