@@ -7,8 +7,8 @@ library version;
 /// Provides immutable storage and comparison of semantic version numbers.
 class Version {
   static final RegExp _versionRegex =
-      new RegExp(r"^([\d\.]+)(\-([0-9A-Za-z\-\.]+))?(\+([0-9A-Za-z\-\.]+))?$");
-  static final RegExp _buildRegex = new RegExp(r"^[0-9A-Za-z\-\.]+$");
+  new RegExp(r"^([\d.]+)(-([0-9A-Za-z\-.]+))?(\+([0-9A-Za-z\-.]+))?$");
+  static final RegExp _buildRegex = new RegExp(r"^[0-9A-Za-z\-.]+$");
   static final RegExp _preReleaseRegex = new RegExp(r"^[0-9A-Za-z\-]+$");
 
   /// The major number of the version, incremented when making breaking changes.
@@ -72,7 +72,7 @@ class Version {
     hash = hash * 7 + minor;
     hash = hash * 7 + patch;
     hash = hash * 7 + build.hashCode;
-    for(String seg in _preRelease) {
+    for (String seg in _preRelease) {
       hash = hash * 7 + seg.hashCode;
     }
     // TODO: Re-implement this to ensure it never overflows
@@ -228,6 +228,6 @@ class Version {
     if (s == null) {
       return false;
     }
-    return double.parse(s, (dynamic e) => null) != null;
+    return double.tryParse(s) != null;
   }
 }

@@ -1,8 +1,8 @@
 // Copyright (c) 2017, Matthew Barbour. All rights reserved. Use of this source code
 // is governed by a BSD-style license that can be found in the LICENSE file.
 
-import 'package:version/version.dart';
 import 'package:test/test.dart';
+import 'package:version/version.dart';
 
 void main() {
   Version zeroZeroOne,
@@ -23,9 +23,9 @@ void main() {
     oneZeroZeroDuplicate = new Version(1, 0, 0);
 
     buildVersion = new Version(1, 0, 0, build: "buildNumber");
-    preReleaseVersion = new Version(1, 0, 0, preRelease: ["alpha"]);
+    preReleaseVersion = new Version(1, 0, 0, preRelease: <String>["alpha"]);
     buildAndPrereleaseVersion =
-        new Version(1, 0, 0, preRelease: ["alpha"], build: "anotherBuild");
+    new Version(1, 0, 0, preRelease: <String>["alpha"], build: "anotherBuild");
   });
 
   test('== tests', () {
@@ -207,9 +207,11 @@ void main() {
     expect(() => new Version(0, 0, 0), throwsArgumentError);
     expect(() => new Version(1, 0, 0, build: null), throwsArgumentError);
     expect(() => new Version(1, 0, 0, preRelease: null), throwsArgumentError);
-    expect(() => new Version(1, 0, 0, preRelease: [null]), throwsArgumentError);
-    expect(() => new Version(1, 0, 0, preRelease: [""]), throwsArgumentError);
-    expect(() => new Version(1, 0, 0, preRelease: ["not^safe"]),
+    expect(() => new Version(1, 0, 0, preRelease: <String>[null]),
+        throwsArgumentError);
+    expect(() => new Version(1, 0, 0, preRelease: <String>[""]),
+        throwsArgumentError);
+    expect(() => new Version(1, 0, 0, preRelease: <String>["not^safe"]),
         throwsFormatException);
     expect(
         () => new Version(1, 0, 0, build: "not^safe"), throwsFormatException);
@@ -258,7 +260,7 @@ void main() {
     expect(new Version(1, 1, 2).incrementPatch(), equals(new Version(1, 1, 3)));
 
     expect(
-        new Version(1, 1, 1, preRelease: ["alpha"], build: "test")
+        new Version(1, 1, 1, preRelease: <String>["alpha"], build: "test")
             .incrementMajor(),
         equals(new Version(2, 0, 0)));
   });
@@ -271,10 +273,12 @@ void main() {
     expect(new Version(001, 000, 0010).toString(), equals("1.0.10"));
     expect(
         new Version(1, 1, 1, build: "alpha").toString(), equals("1.1.1+alpha"));
-    expect(new Version(1, 1, 1, preRelease: ["alpha", "omega"]).toString(),
+    expect(
+        new Version(1, 1, 1, preRelease: <String>["alpha", "omega"]).toString(),
         equals("1.1.1-alpha.omega"));
     expect(
-        new Version(1, 1, 1, build: "alpha", preRelease: ["beta", "gamma"])
+        new Version(
+            1, 1, 1, build: "alpha", preRelease: <String>["beta", "gamma"])
             .toString(),
         equals("1.1.1-beta.gamma+alpha"));
   });

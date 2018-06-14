@@ -1,8 +1,13 @@
 # version
-[![version 1.0.2](https://img.shields.io/badge/pub-1.0.2-brightgreen.svg)](https://pub.dartlang.org/packages/version)
-[![build status](https://api.travis-ci.org/dartalog/version_dart.svg)](https://travis-ci.org/dartalog/version_dart)
+[![version 1.0.3](https://img.shields.io/badge/pub-1.0.3-brightgreen.svg)](https://pub.dartlang.org/packages/version)
+[![build status](https://api.travis-ci.org/dartninja/version.svg)](https://travis-ci.org/dartninja/version)
+[![Coverage Status](https://coveralls.io/repos/github/dartninja/version/badge.svg?branch=master)](https://coveralls.io/github/dartninja/version?branch=master)
 
 A dart library providing a Version object for comparing and incrementing version numbers in compliance with the Semantic Versioning spec at http://semver.org/
+
+This is in contrast to [pub_semver][pub_semver], which is close to the spec but diverts in a few specific ways.
+
+[pub_semver]: https://pub.dartlang.org/packages/pub_semver
 
 # Installation
 In your `pubspec.yaml`:
@@ -38,4 +43,4 @@ A simple usage example:
 
 Please file feature requests and bugs at the [issue tracker][tracker].
 
-[tracker]: https://github.com/dartalog/version_dart/issues
+[tracker]: https://github.com/dartninja/version/issues
