@@ -354,13 +354,14 @@ void main() {
   });
 
   test("hashCode test", () {
-    final Version versionOne = new Version(1,0,0, preRelease: <String>["alpha"]);
-    final Version versionTwo = new Version(1,0,0, preRelease: <String>["al","pha"]);
-    final Version versionThree = new Version(1,0,0);
+    final Version versionOne =
+        new Version(1, 0, 0, preRelease: <String>["alpha"]);
+    final Version versionTwo =
+        new Version(1, 0, 0, preRelease: <String>["al", "pha"]);
+    final Version versionThree = new Version(1, 0, 0);
 
     expect(versionOne.hashCode != versionTwo.hashCode, isTrue);
     expect(versionTwo.hashCode != versionThree.hashCode, isTrue);
     expect(versionOne.hashCode != versionThree.hashCode, isTrue);
-
   });
 }
