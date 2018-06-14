@@ -11,8 +11,8 @@ void main() {
     print("Update is available");
   }
 
-  final Version betaVersion = new Version(
-      2, 1, 0, preRelease: <String>["beta"]);
+  final Version betaVersion =
+  new Version(2, 1, 0, preRelease: <String>["beta"]);
   // Note: this test will return false, as pre-release versions are considered
   // lesser then a non-pre-release version that otherwise has the same numbers.
   if (betaVersion > latestVersion) {
