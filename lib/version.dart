@@ -7,7 +7,7 @@ library version;
 /// Provides immutable storage and comparison of semantic version numbers.
 class Version {
   static final RegExp _versionRegex =
-  new RegExp(r"^([\d.]+)(-([0-9A-Za-z\-.]+))?(\+([0-9A-Za-z\-.]+))?$");
+      new RegExp(r"^([\d.]+)(-([0-9A-Za-z\-.]+))?(\+([0-9A-Za-z\-.]+))?$");
   static final RegExp _buildRegex = new RegExp(r"^[0-9A-Za-z\-.]+$");
   static final RegExp _preReleaseRegex = new RegExp(r"^[0-9A-Za-z\-]+$");
 
