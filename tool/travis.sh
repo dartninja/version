@@ -27,6 +27,8 @@ pub run test --reporter expanded
 
 # Gather coverage and upload to Coveralls.
 if [ "$COVERALLS_TOKEN" ] && [ "$TRAVIS_DART_VERSION" = "dev" ]; then
+    pub global activate coverage
+
   OBS_PORT=9292
   echo "Collecting coverage on port $OBS_PORT..."
 
@@ -37,14 +39,14 @@ if [ "$COVERALLS_TOKEN" ] && [ "$TRAVIS_DART_VERSION" = "dev" ]; then
     test/version_test.dart &
 
   # Run the coverage collector to generate the JSON coverage report.
-  dart bin/collect_coverage.dart \
+  collect_coverage \
     --port=$OBS_PORT \
     --out=var/coverage.json \
     --wait-paused \
     --resume-isolates
 
   echo "Generating LCOV report..."
-  dart bin/format_coverage.dart \
+  format_coverage \
     --lcov \
     --in=var/coverage.json \
     --out=var/lcov.info \
