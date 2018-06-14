@@ -4,6 +4,7 @@
 - Enabled strong mode analysis.
 - Widened SDK version, verified 2.0 compatibility.
 - Updated URLs.
+- Simplified hashCode implementation.
 - Added code coverage support.
 
 ## 1.0.2

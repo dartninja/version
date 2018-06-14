@@ -66,18 +66,7 @@ class Version {
   }
 
   @override
-  int get hashCode {
-    int hash = 1;
-    hash += hash * 7 + major;
-    hash = hash * 7 + minor;
-    hash = hash * 7 + patch;
-    hash = hash * 7 + build.hashCode;
-    for (String seg in _preRelease) {
-      hash = hash * 7 + seg.hashCode;
-    }
-    // TODO: Re-implement this to ensure it never overflows
-    return hash;
-  }
+  int get hashCode => this.toString().hashCode;
 
   /// Pre-release information segments.
   List<String> get preRelease => new List<String>.from(_preRelease);
