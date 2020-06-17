@@ -1,4 +1,7 @@
 # Changelog
+## 1.1.0
+- Implemented Comparable<Version> interface
+
 ## 1.0.3
 - Fixed analysis and formatting issues.
 - Enabled strong mode analysis.
