@@ -87,6 +87,15 @@ class Version implements Comparable<Version> {
   /// Determines whether the left-hand [Version] represents an equal or greater precedence than the right-hand [Version].
   bool operator >=(dynamic o) => o is Version && _compare(this, o) >= 0;
 
+  @override
+  int compareTo(Version other) {
+    if (other == null) {
+      throw new ArgumentError.notNull("other");
+    }
+
+    return _compare(this, other);
+  }
+
   /// Creates a new [Version] with the [major] version number incremented.
   ///
   /// Also resets the [minor] and [patch] numbers to 0, and clears the [build] and [preRelease] information.
@@ -158,11 +167,11 @@ class Version implements Comparable<Version> {
   }
 
   static int _compare(Version a, Version b) {
-    if(a==null) {
+    if (a == null) {
       throw new ArgumentError.notNull("a");
     }
 
-    if(b==null) {
+    if (b == null) {
       throw new ArgumentError.notNull("b");
     }
 
@@ -226,14 +235,5 @@ class Version implements Comparable<Version> {
       return false;
     }
     return double.tryParse(s) != null;
-  }
-
-  @override
-  int compareTo(Version other) {
-    if(other==null) {
-      throw new ArgumentError.notNull("other");
-    }
-
-    return _compare(this, other);
   }
 }
