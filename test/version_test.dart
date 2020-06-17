@@ -266,6 +266,16 @@ void main() {
         equals(new Version(2, 0, 0)));
   });
 
+  test("Comparison tests", () {
+    Version a = new Version(1, 0, 0);
+    Version b = new Version(1, 0, 0);
+    expect(a.compareTo(b), equals(0));
+    b = b.incrementMinor();
+    expect(a.compareTo(b), equals(-1));
+    a = a.incrementMajor();
+    expect(a.compareTo(b), equals(1));
+  });
+
   test("toString tests", () {
     expect(new Version(1, 0, 0).toString(), equals("1.0.0"));
     expect(new Version(1, 1, 0).toString(), equals("1.1.0"));

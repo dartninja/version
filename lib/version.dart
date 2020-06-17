@@ -5,7 +5,7 @@
 library version;
 
 /// Provides immutable storage and comparison of semantic version numbers.
-class Version {
+class Version implements Comparable<Version> {
   static final RegExp _versionRegex =
       new RegExp(r"^([\d.]+)(-([0-9A-Za-z\-.]+))?(\+([0-9A-Za-z\-.]+))?$");
   static final RegExp _buildRegex = new RegExp(r"^[0-9A-Za-z\-.]+$");
@@ -158,6 +158,14 @@ class Version {
   }
 
   static int _compare(Version a, Version b) {
+    if(a==null) {
+      throw new ArgumentError.notNull("a");
+    }
+
+    if(b==null) {
+      throw new ArgumentError.notNull("b");
+    }
+
     if (a.major > b.major) return 1;
     if (a.major < b.major) return -1;
 
@@ -218,5 +226,14 @@ class Version {
       return false;
     }
     return double.tryParse(s) != null;
+  }
+
+  @override
+  int compareTo(Version other) {
+    if(other==null) {
+      throw new ArgumentError.notNull("other");
+    }
+
+    return _compare(this, other);
   }
 }
