@@ -1,6 +1,12 @@
 # Changelog
+## 1.2.0
+- Added support for version 0.0.0
+
+## 1.1.1-1.1.3
+- Resolved code analysis hints
+
 ## 1.1.0
-- Implemented Comparable<Version> interface
+- Implemented Comparable&lt;Version&gt; interface
 
 ## 1.0.3
 - Fixed analysis and formatting issues.

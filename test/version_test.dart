@@ -5,7 +5,8 @@ import 'package:test/test.dart';
 import 'package:version/version.dart';
 
 void main() {
-  Version zeroZeroOne,
+  Version zeroZeroZero,
+      zeroZeroOne,
       zeroOneZero,
       oneZeroZero,
       fiveZeroFive,
@@ -15,6 +16,7 @@ void main() {
       buildAndPrereleaseVersion;
 
   setUp(() {
+    zeroZeroZero = new Version(0, 0, 0);
     zeroZeroOne = new Version(0, 0, 1);
     zeroOneZero = new Version(0, 1, 0);
     oneZeroZero = new Version(1, 0, 0);
@@ -29,6 +31,12 @@ void main() {
   });
 
   test('== tests', () {
+    expect(zeroZeroOne == zeroZeroZero, isFalse);
+    expect(oneZeroZero == zeroZeroZero, isFalse);
+    expect(fiveZeroFive == zeroZeroZero, isFalse);
+    expect(zeroZeroZero == zeroZeroZero, isTrue);
+
+
     expect(zeroZeroOne == zeroOneZero, isFalse);
     expect(zeroZeroOne == oneZeroZero, isFalse);
     expect(zeroOneZero == oneZeroZero, isFalse);
@@ -52,6 +60,11 @@ void main() {
   });
 
   test('> tests', () {
+    expect(zeroZeroZero > zeroOneZero, isFalse);
+    expect(zeroZeroZero > oneZeroZero, isFalse);
+    expect(zeroZeroZero > zeroZeroZero, isFalse);
+
+
     expect(zeroZeroOne > zeroOneZero, isFalse);
     expect(zeroZeroOne > oneZeroZero, isFalse);
     expect(zeroOneZero > oneZeroZero, isFalse);
@@ -90,6 +103,11 @@ void main() {
   });
 
   test('< tests', () {
+    expect(zeroZeroZero < zeroOneZero, isTrue);
+    expect(zeroZeroZero < oneZeroZero, isTrue);
+    expect(zeroZeroZero < fiveZeroFive, isTrue);
+    expect(zeroZeroZero < zeroZeroZero, isFalse);
+
     expect(zeroZeroOne < zeroOneZero, isTrue);
     expect(zeroZeroOne < oneZeroZero, isTrue);
     expect(zeroOneZero < oneZeroZero, isTrue);
@@ -125,6 +143,10 @@ void main() {
   });
 
   test('<= tests', () {
+    expect(zeroZeroZero <= zeroOneZero, isTrue);
+    expect(zeroZeroZero <= oneZeroZero, isTrue);
+    expect(zeroZeroZero <= zeroZeroZero, isTrue);
+
     expect(zeroZeroOne <= zeroOneZero, isTrue);
     expect(zeroZeroOne <= oneZeroZero, isTrue);
     expect(zeroOneZero <= oneZeroZero, isTrue);
@@ -160,6 +182,10 @@ void main() {
   });
 
   test('>= tests', () {
+    expect(zeroZeroZero >= zeroOneZero, isFalse);
+    expect(zeroZeroZero >= oneZeroZero, isFalse);
+    expect(zeroZeroZero >= zeroZeroZero, isTrue);
+
     expect(zeroZeroOne >= zeroOneZero, isFalse);
     expect(zeroZeroOne >= oneZeroZero, isFalse);
     expect(zeroOneZero >= oneZeroZero, isFalse);
@@ -204,7 +230,8 @@ void main() {
     expect(() => new Version(-1, 0, 0), throwsArgumentError);
     expect(() => new Version(1, -1, 0), throwsArgumentError);
     expect(() => new Version(1, 1, -1), throwsArgumentError);
-    expect(() => new Version(0, 0, 0), throwsArgumentError);
+    expect(() => new Version(0, -1, 1), throwsArgumentError);
+    expect(() => new Version(0, 0, -1), throwsArgumentError);
     expect(() => new Version(1, 0, 0, build: null), throwsArgumentError);
     expect(() => new Version(1, 0, 0, preRelease: null), throwsArgumentError);
     expect(() => new Version(1, 0, 0, preRelease: <String>[null]),
@@ -218,10 +245,13 @@ void main() {
   });
 
   test("Parse tests", () {
+    expect(Version.parse("0"), equals(new Version(0, 0, 0)));
+    expect(Version.parse("0.0.0"), equals(new Version(0, 0, 0)));
     expect(Version.parse("1"), equals(new Version(1, 0, 0)));
     expect(Version.parse("1.0"), equals(new Version(1, 0, 0)));
     expect(Version.parse("1.2.1"), equals(new Version(1, 2, 1)));
     expect(Version.parse("0.5.3"), equals(new Version(0, 5, 3)));
+    expect(Version.parse("0.0.3"), equals(new Version(0, 0, 3)));
     expect(Version.parse("1.2.3.5"), equals(new Version(1, 2, 3)));
     expect(Version.parse("99999.55465.5456"),
         equals(new Version(99999, 55465, 5456)));
@@ -277,6 +307,7 @@ void main() {
   });
 
   test("toString tests", () {
+    expect(new Version(0, 0, 0).toString(), equals("0.0.0"));
     expect(new Version(1, 0, 0).toString(), equals("1.0.0"));
     expect(new Version(1, 1, 0).toString(), equals("1.1.0"));
     expect(new Version(1, 1, 1).toString(), equals("1.1.1"));
@@ -296,6 +327,7 @@ void main() {
   test("Pre-release precedence test", () {
     // 1.0.0-alpha < 1.0.0-alpha.1 < 1.0.0-alpha.beta < 1.0.0-beta < 1.0.0-beta.2 < 1.0.0-beta.11 < 1.0.0-rc.1 < 1.0.0
     final List<Version> versions = <Version>[
+      zeroZeroZero,
       zeroZeroOne,
       zeroOneZero,
       Version.parse("1.0.0-alpha"),
