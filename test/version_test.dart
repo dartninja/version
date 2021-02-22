@@ -5,7 +5,7 @@ import 'package:test/test.dart';
 import 'package:version/version.dart';
 
 void main() {
-  Version zeroZeroZero,
+  late Version zeroZeroZero,
       zeroZeroOne,
       zeroOneZero,
       oneZeroZero,
@@ -36,7 +36,6 @@ void main() {
     expect(fiveZeroFive == zeroZeroZero, isFalse);
     expect(zeroZeroZero == zeroZeroZero, isTrue);
 
-
     expect(zeroZeroOne == zeroOneZero, isFalse);
     expect(zeroZeroOne == oneZeroZero, isFalse);
     expect(zeroOneZero == oneZeroZero, isFalse);
@@ -63,7 +62,6 @@ void main() {
     expect(zeroZeroZero > zeroOneZero, isFalse);
     expect(zeroZeroZero > oneZeroZero, isFalse);
     expect(zeroZeroZero > zeroZeroZero, isFalse);
-
 
     expect(zeroZeroOne > zeroOneZero, isFalse);
     expect(zeroZeroOne > oneZeroZero, isFalse);
@@ -234,7 +232,7 @@ void main() {
     expect(() => new Version(0, 0, -1), throwsArgumentError);
     expect(() => new Version(1, 0, 0, build: null), throwsArgumentError);
     expect(() => new Version(1, 0, 0, preRelease: null), throwsArgumentError);
-    expect(() => new Version(1, 0, 0, preRelease: <String>[null]),
+    expect(() => new Version(1, 0, 0, preRelease: <String?>[null]),
         throwsArgumentError);
     expect(() => new Version(1, 0, 0, preRelease: <String>[""]),
         throwsArgumentError);
