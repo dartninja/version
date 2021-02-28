@@ -3,6 +3,9 @@
 - Added isPreRelease
 - Added incrementPreRelease
 
+## 1.2.1
+- Formatting pass
+
 ## 1.2.0
 - Added support for version 0.0.0
 
