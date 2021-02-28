@@ -25,6 +25,9 @@ class Version implements Comparable<Version> {
 
   final List<String> _preRelease;
 
+  /// Indicates that the version is a pre-release. Returns true if preRelease has any segments, otherwise false
+  bool get isPreRelease => _preRelease?.isNotEmpty??false;
+
   /// Creates a new instance of [Version].
   ///
   /// [major], [minor], and [patch] are all required, all must be greater than 0 and not null, and at least one must be greater than 0.

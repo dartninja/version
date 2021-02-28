@@ -406,4 +406,14 @@ void main() {
     expect(versionTwo.hashCode != versionThree.hashCode, isTrue);
     expect(versionOne.hashCode != versionThree.hashCode, isTrue);
   });
+
+  test("isPreRelease test", () {
+    final Version versionOne =
+      new Version(1, 0, 0, preRelease: <String>["alpha"]);
+    final Version versionTwo =
+      new Version(1, 0, 0);
+
+    expect(versionOne.isPreRelease, isTrue);
+    expect(versionTwo.isPreRelease, isFalse);
+  });
 }
