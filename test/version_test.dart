@@ -416,4 +416,17 @@ void main() {
     expect(versionOne.isPreRelease, isTrue);
     expect(versionTwo.isPreRelease, isFalse);
   });
+
+  test("incrementPreRelease test", () {
+    expect(() => new Version(1, 0, 0).incrementPreRelease(), throwsException);
+
+    expect(new Version(1, 0, 0, preRelease: ["beta"]).incrementPreRelease(),
+        equals(new Version(1, 0, 0, preRelease: ["beta", "1"])));
+
+    expect(new Version(1, 0, 0, preRelease: ["alpha", "3"]).incrementPreRelease(),
+        equals(new Version(1, 0, 0, preRelease: ["alpha", "4"])));
+
+    expect(new Version(1, 0, 0, preRelease: ["alpha", "9", "omega"]).incrementPreRelease(),
+        equals(new Version(1, 0, 0, preRelease: ["alpha", "10", "omega"])));
+  });
 }
