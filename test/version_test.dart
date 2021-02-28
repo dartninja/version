@@ -222,18 +222,11 @@ void main() {
   });
 
   test("Validation tests", () {
-    expect(() => new Version(null, 0, 0), throwsArgumentError);
-    expect(() => new Version(1, null, 0), throwsArgumentError);
-    expect(() => new Version(1, 2, null), throwsArgumentError);
     expect(() => new Version(-1, 0, 0), throwsArgumentError);
     expect(() => new Version(1, -1, 0), throwsArgumentError);
     expect(() => new Version(1, 1, -1), throwsArgumentError);
     expect(() => new Version(0, -1, 1), throwsArgumentError);
     expect(() => new Version(0, 0, -1), throwsArgumentError);
-    expect(() => new Version(1, 0, 0, build: null), throwsArgumentError);
-    expect(() => new Version(1, 0, 0, preRelease: null), throwsArgumentError);
-    expect(() => new Version(1, 0, 0, preRelease: <String?>[null]),
-        throwsArgumentError);
     expect(() => new Version(1, 0, 0, preRelease: <String>[""]),
         throwsArgumentError);
     expect(() => new Version(1, 0, 0, preRelease: <String>["not^safe"]),
@@ -407,9 +400,8 @@ void main() {
 
   test("isPreRelease test", () {
     final Version versionOne =
-      new Version(1, 0, 0, preRelease: <String>["alpha"]);
-    final Version versionTwo =
-      new Version(1, 0, 0);
+        new Version(1, 0, 0, preRelease: <String>["alpha"]);
+    final Version versionTwo = new Version(1, 0, 0);
 
     expect(versionOne.isPreRelease, isTrue);
     expect(versionTwo.isPreRelease, isFalse);
@@ -421,14 +413,19 @@ void main() {
     expect(new Version(1, 0, 0, preRelease: ["beta"]).incrementPreRelease(),
         equals(new Version(1, 0, 0, preRelease: ["beta", "1"])));
 
-    expect(new Version(1, 0, 0, preRelease: ["alpha", "3"]).incrementPreRelease(),
+    expect(
+        new Version(1, 0, 0, preRelease: ["alpha", "3"]).incrementPreRelease(),
         equals(new Version(1, 0, 0, preRelease: ["alpha", "4"])));
 
-    expect(new Version(1, 0, 0, preRelease: ["alpha", "9", "omega"]).incrementPreRelease(),
+    expect(
+        new Version(1, 0, 0, preRelease: ["alpha", "9", "omega"])
+            .incrementPreRelease(),
         equals(new Version(1, 0, 0, preRelease: ["alpha", "10", "omega"])));
 
-    expect(new Version(1, 0, 0, preRelease: ["alpha", "9", "omega"]).incrementPreRelease()>
-        new Version(1, 0, 0, preRelease: ["alpha", "9", "omega"]), isTrue);
-
+    expect(
+        new Version(1, 0, 0, preRelease: ["alpha", "9", "omega"])
+                .incrementPreRelease() >
+            new Version(1, 0, 0, preRelease: ["alpha", "9", "omega"]),
+        isTrue);
   });
 }
