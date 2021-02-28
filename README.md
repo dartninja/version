@@ -1,6 +1,6 @@
 # version
 [![version 1.3.0](https://img.shields.io/badge/pub-1.3.0-brightgreen.svg)](https://pub.dartlang.org/packages/version)
-![Dart CI](https://github.com/dartninja/version/workflows/Dart%20CI/badge.svg)
+[![Dart CI](https://github.com/dartninja/version/workflows/Dart%20CI/badge.svg)](https://github.com/dartninja/version/actions/workflows/dart.yml)
 [![Coverage Status](https://coveralls.io/repos/github/dartninja/version/badge.svg?branch=master)](https://coveralls.io/github/dartninja/version?branch=master)
 
 A dart library providing a Version object for comparing and incrementing version numbers in compliance with the Semantic Versioning spec at http://semver.org/
