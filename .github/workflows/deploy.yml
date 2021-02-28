@@ -3,9 +3,11 @@ on:
   push:
     branches:
       - master
+      - nullsafety_deploy
   pull_request:
     branches:
       - master
+      - nullsafety_deploy
 jobs:
   build:
     runs-on: ubuntu-latest

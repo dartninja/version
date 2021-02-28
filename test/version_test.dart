@@ -222,18 +222,11 @@ void main() {
   });
 
   test("Validation tests", () {
-    expect(() => new Version(null, 0, 0), throwsArgumentError);
-    expect(() => new Version(1, null, 0), throwsArgumentError);
-    expect(() => new Version(1, 2, null), throwsArgumentError);
     expect(() => new Version(-1, 0, 0), throwsArgumentError);
     expect(() => new Version(1, -1, 0), throwsArgumentError);
     expect(() => new Version(1, 1, -1), throwsArgumentError);
     expect(() => new Version(0, -1, 1), throwsArgumentError);
     expect(() => new Version(0, 0, -1), throwsArgumentError);
-    expect(() => new Version(1, 0, 0, build: null), throwsArgumentError);
-    expect(() => new Version(1, 0, 0, preRelease: null), throwsArgumentError);
-    expect(() => new Version(1, 0, 0, preRelease: <String?>[null]),
-        throwsArgumentError);
     expect(() => new Version(1, 0, 0, preRelease: <String>[""]),
         throwsArgumentError);
     expect(() => new Version(1, 0, 0, preRelease: <String>["not^safe"]),
