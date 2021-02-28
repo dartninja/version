@@ -26,7 +26,7 @@ class Version implements Comparable<Version> {
   final List<String> _preRelease;
 
   /// Indicates that the version is a pre-release. Returns true if preRelease has any segments, otherwise false
-  bool get isPreRelease => _preRelease?.isNotEmpty??false;
+  bool get isPreRelease => _preRelease?.isNotEmpty ?? false;
 
   /// Creates a new instance of [Version].
   ///
@@ -116,15 +116,16 @@ class Version implements Comparable<Version> {
   ///
   /// If this [Version] is not a pre-release version, an Exception will be thrown.
   Version incrementPreRelease() {
-    if(!this.isPreRelease) {
-      throw new Exception("Cannot increment pre-release on a non-pre-release [Version]");
+    if (!this.isPreRelease) {
+      throw Exception(
+          "Cannot increment pre-release on a non-pre-release [Version]");
     }
     var newPreRelease = this.preRelease;
 
     var found = false;
-    for(var i = newPreRelease.length - 1 ; i >= 0; i--) {
+    for (var i = newPreRelease.length - 1; i >= 0; i--) {
       var segment = newPreRelease[i];
-      if(Version._isNumeric(segment)) {
+      if (Version._isNumeric(segment)) {
         var intVal = int.parse(segment);
         intVal++;
         newPreRelease[i] = intVal.toString();
@@ -132,13 +133,13 @@ class Version implements Comparable<Version> {
         break;
       }
     }
-    if(!found) {
+    if (!found) {
       newPreRelease.add("1");
     }
 
-    return Version(this.major, this.minor, this.patch, preRelease: newPreRelease);
+    return Version(this.major, this.minor, this.patch,
+        preRelease: newPreRelease);
   }
-
 
   /// Returns a [String] representation of the [Version].
   ///
