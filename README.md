@@ -1,5 +1,5 @@
 # version
-[![version 1.0.3](https://img.shields.io/badge/pub-1.2.0-brightgreen.svg)](https://pub.dartlang.org/packages/version)
+[![version 1.3.0](https://img.shields.io/badge/pub-1.3.0-brightgreen.svg)](https://pub.dartlang.org/packages/version)
 ![Dart CI](https://github.com/dartninja/version/workflows/Dart%20CI/badge.svg)
 [![Coverage Status](https://coveralls.io/repos/github/dartninja/version/badge.svg?branch=master)](https://coveralls.io/github/dartninja/version?branch=master)
 
