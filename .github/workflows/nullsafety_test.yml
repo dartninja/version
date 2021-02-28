@@ -1,16 +1,16 @@
-name: Tests
+name: Dart CI
 
 on:
   push:
-    branches: [ master, develop ]
+    branches: [ nullsafety ]
   pull_request:
-    branches: [ master, develop ]
+    branches: [ nullsafety ]
 
 jobs:
   test:
     runs-on: ubuntu-latest
     container:
-      image:  google/dart:latest
+      image:  google/dart:beta
     steps:
     - uses: actions/checkout@v2
     - name: Install dependencies
