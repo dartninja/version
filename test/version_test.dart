@@ -428,5 +428,9 @@ void main() {
 
     expect(new Version(1, 0, 0, preRelease: ["alpha", "9", "omega"]).incrementPreRelease(),
         equals(new Version(1, 0, 0, preRelease: ["alpha", "10", "omega"])));
+
+    expect(new Version(1, 0, 0, preRelease: ["alpha", "9", "omega"]).incrementPreRelease()>
+        new Version(1, 0, 0, preRelease: ["alpha", "9", "omega"]), isTrue);
+
   });
 }
