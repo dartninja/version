@@ -2,18 +2,15 @@ name: Tests
 
 on:
   push:
-    branches: [ master, develop ]
+    branches: [ master, develop, nullsafety ]
   pull_request:
-    branches: [ master, develop ]
+    branches: [ master, develop, nullsafety ]
 
 jobs:
-  build:
-
+  test:
     runs-on: ubuntu-latest
-
     container:
       image:  google/dart:latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Install dependencies

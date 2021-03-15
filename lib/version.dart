@@ -1,4 +1,4 @@
-// Copyright (c) 2017, Matthew Barbour. All rights reserved. Use of this source code
+// Copyright (c) 2021, Matthew Barbour. All rights reserved. Use of this source code
 // is governed by a BSD-style license that can be found in the LICENSE file.
 
 /// Provides version objects to enforce conformance to the Semantic Versioning 2.0 spec. The spec can be read at http://semver.org/
@@ -26,7 +26,7 @@ class Version implements Comparable<Version> {
   final List<String> _preRelease;
 
   /// Indicates that the version is a pre-release. Returns true if preRelease has any segments, otherwise false
-  bool get isPreRelease => _preRelease?.isNotEmpty ?? false;
+  bool get isPreRelease => _preRelease.isNotEmpty;
 
   /// Creates a new instance of [Version].
   ///
@@ -38,15 +38,9 @@ class Version implements Comparable<Version> {
   Version(this.major, this.minor, this.patch,
       {List<String> preRelease = const <String>[], this.build = ""})
       : _preRelease = preRelease {
-    if (this.major == null) throw ArgumentError("major must not be null");
-    if (this.minor == null) throw ArgumentError("minor must not be null");
-    if (this.patch == null) throw ArgumentError("patch must not be null");
-    if (this._preRelease == null) {
-      throw ArgumentError("preRelease must not be null");
-    }
     for (int i = 0; i < _preRelease.length; i++) {
-      if (_preRelease[i] == null || _preRelease[i].toString().trim().isEmpty) {
-        throw ArgumentError("preRelease segments must not be null or empty");
+      if (_preRelease[i].toString().trim().isEmpty) {
+        throw ArgumentError("preRelease segments must not be empty");
       }
       // Just in case
       _preRelease[i] = _preRelease[i].toString();
@@ -55,7 +49,6 @@ class Version implements Comparable<Version> {
             "preRelease segments must only contain [0-9A-Za-z-]");
       }
     }
-    if (this.build == null) throw ArgumentError("build must not be null");
     if (this.build.isNotEmpty && !_buildRegex.hasMatch(this.build)) {
       throw FormatException("build must only contain [0-9A-Za-z-.]");
     }
@@ -88,7 +81,7 @@ class Version implements Comparable<Version> {
   bool operator >=(dynamic o) => o is Version && _compare(this, o) >= 0;
 
   @override
-  int compareTo(Version other) {
+  int compareTo(Version? other) {
     if (other == null) {
       throw ArgumentError.notNull("other");
     }
@@ -154,7 +147,7 @@ class Version implements Comparable<Version> {
     if (_preRelease.isNotEmpty) {
       output.write("-${_preRelease.join('.')}");
     }
-    if (build != null && build.trim().isNotEmpty) {
+    if (build.trim().isNotEmpty) {
       output.write("+${build.trim()}");
     }
     return output.toString();
@@ -164,17 +157,17 @@ class Version implements Comparable<Version> {
   ///
   /// The string must conform to the specification at http://semver.org/
   /// Throws [FormatException] if the string is empty or does not conform to the spec.
-  static Version parse(String versionString) {
-    if (versionString?.trim()?.isEmpty ?? true) {
+  static Version parse(String? versionString) {
+    if (versionString?.trim().isEmpty ?? true) {
       throw FormatException("Cannot parse empty string into version");
     }
-    if (!_versionRegex.hasMatch(versionString)) {
+    if (!_versionRegex.hasMatch(versionString!)) {
       throw FormatException("Not a properly formatted version string");
     }
-    final Match m = _versionRegex.firstMatch(versionString);
-    final String version = m.group(1);
+    final Match m = _versionRegex.firstMatch(versionString)!;
+    final String version = m.group(1)!;
 
-    int major, minor, patch;
+    int? major, minor, patch;
     final List<String> parts = version.split(".");
     major = int.parse(parts[0]);
     if (parts.length > 1) {
@@ -191,11 +184,11 @@ class Version implements Comparable<Version> {
     }
     final String build = m.group(5) ?? "";
 
-    return Version(major ?? 0, minor ?? 0, patch ?? 0,
+    return Version(major, minor ?? 0, patch ?? 0,
         build: build, preRelease: preReleaseList);
   }
 
-  static int _compare(Version a, Version b) {
+  static int _compare(Version? a, Version? b) {
     if (a == null) {
       throw ArgumentError.notNull("a");
     }
@@ -259,7 +252,7 @@ class Version implements Comparable<Version> {
     return 0;
   }
 
-  static bool _isNumeric(String s) {
+  static bool _isNumeric(String? s) {
     if (s == null) {
       return false;
     }
