@@ -1,4 +1,7 @@
 # Changelog
+## 2.0.0
+- Updated to comply with Dart null safety
+
 ## 1.3.0
 - Added isPreRelease
 - Added incrementPreRelease
