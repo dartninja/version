@@ -1,4 +1,4 @@
-// Copyright (c) 2017, Matthew Barbour. All rights reserved. Use of this source code
+// Copyright (c) 2021, Matthew Barbour. All rights reserved. Use of this source code
 // is governed by a BSD-style license that can be found in the LICENSE file.
 
 /// Provides version objects to enforce conformance to the Semantic Versioning 2.0 spec. The spec can be read at http://semver.org/

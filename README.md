@@ -1,5 +1,5 @@
 # version
-[![version 2.0.0-nullsafety](https://img.shields.io/badge/pub-2.0.0.nullsafety-brightgreen.svg)](https://pub.dartlang.org/packages/version)
+[![version 2.0.0](https://img.shields.io/badge/pub-2.0.0-brightgreen.svg)](https://pub.dartlang.org/packages/version)
 [![Tests](https://github.com/dartninja/version/workflows/Tests/badge.svg)](https://github.com/dartninja/version/actions/workflows/test.yml)
 [![Coverage Status](https://coveralls.io/repos/github/dartninja/version/badge.svg?branch=master)](https://coveralls.io/github/dartninja/version?branch=master)
 
@@ -14,7 +14,7 @@ In your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  version: ^2.0.0-0
+  version: ^2.0.0
 ```
 
 ## Usage
