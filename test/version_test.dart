@@ -5,29 +5,34 @@ import 'package:test/test.dart';
 import 'package:version/version.dart';
 
 void main() {
-  late Version zeroZeroZero,
-      zeroZeroOne,
-      zeroOneZero,
-      oneZeroZero,
-      fiveZeroFive,
-      oneZeroZeroDuplicate,
-      buildVersion,
-      preReleaseVersion,
-      buildAndPrereleaseVersion;
+  late Version zeroZeroZero;
+  late Version zeroZeroOne;
+  late Version zeroOneZero;
+  late Version oneZeroZero;
+  late Version fiveZeroFive;
+  late Version oneZeroZeroDuplicate;
+  late Version buildVersion;
+  late Version preReleaseVersion;
+  late Version buildAndPrereleaseVersion;
 
   setUp(() {
-    zeroZeroZero = new Version(0, 0, 0);
-    zeroZeroOne = new Version(0, 0, 1);
-    zeroOneZero = new Version(0, 1, 0);
-    oneZeroZero = new Version(1, 0, 0);
+    zeroZeroZero = Version(0, 0, 0);
+    zeroZeroOne = Version(0, 0, 1);
+    zeroOneZero = Version(0, 1, 0);
+    oneZeroZero = Version(1, 0, 0);
 
-    fiveZeroFive = new Version(5, 0, 5);
-    oneZeroZeroDuplicate = new Version(1, 0, 0);
+    fiveZeroFive = Version(5, 0, 5);
+    oneZeroZeroDuplicate = Version(1, 0, 0);
 
-    buildVersion = new Version(1, 0, 0, build: "buildNumber");
-    preReleaseVersion = new Version(1, 0, 0, preRelease: <String>["alpha"]);
-    buildAndPrereleaseVersion = new Version(1, 0, 0,
-        preRelease: <String>["alpha"], build: "anotherBuild");
+    buildVersion = Version(1, 0, 0, build: "buildNumber");
+    preReleaseVersion = Version(1, 0, 0, preRelease: <String>["alpha"]);
+    buildAndPrereleaseVersion = Version(
+      1,
+      0,
+      0,
+      preRelease: <String>["alpha"],
+      build: "anotherBuild",
+    );
   });
 
   test('== tests', () {
@@ -222,47 +227,83 @@ void main() {
   });
 
   test("Validation tests", () {
-    expect(() => new Version(-1, 0, 0), throwsArgumentError);
-    expect(() => new Version(1, -1, 0), throwsArgumentError);
-    expect(() => new Version(1, 1, -1), throwsArgumentError);
-    expect(() => new Version(0, -1, 1), throwsArgumentError);
-    expect(() => new Version(0, 0, -1), throwsArgumentError);
-    expect(() => new Version(1, 0, 0, preRelease: <String>[""]),
-        throwsArgumentError);
-    expect(() => new Version(1, 0, 0, preRelease: <String>["not^safe"]),
-        throwsFormatException);
+    expect(() => Version(-1, 0, 0), throwsArgumentError);
+    expect(() => Version(1, -1, 0), throwsArgumentError);
+    expect(() => Version(1, 1, -1), throwsArgumentError);
+    expect(() => Version(0, -1, 1), throwsArgumentError);
+    expect(() => Version(0, 0, -1), throwsArgumentError);
     expect(
-        () => new Version(1, 0, 0, build: "not^safe"), throwsFormatException);
+      () => Version(1, 0, 0, preRelease: <String>[""]),
+      throwsArgumentError,
+    );
+    expect(
+      () => Version(1, 0, 0, preRelease: <String>["not^safe"]),
+      throwsFormatException,
+    );
+    expect(
+      () => Version(1, 0, 0, build: "not^safe"),
+      throwsFormatException,
+    );
   });
 
   test("Parse tests", () {
-    expect(Version.parse("0"), equals(new Version(0, 0, 0)));
-    expect(Version.parse("0.0.0"), equals(new Version(0, 0, 0)));
-    expect(Version.parse("1"), equals(new Version(1, 0, 0)));
-    expect(Version.parse("1.0"), equals(new Version(1, 0, 0)));
-    expect(Version.parse("1.2.1"), equals(new Version(1, 2, 1)));
-    expect(Version.parse("0.5.3"), equals(new Version(0, 5, 3)));
-    expect(Version.parse("0.0.3"), equals(new Version(0, 0, 3)));
-    expect(Version.parse("1.2.3.5"), equals(new Version(1, 2, 3)));
-    expect(Version.parse("99999.55465.5456"),
-        equals(new Version(99999, 55465, 5456)));
-    expect(Version.parse("1.0.0-alpha"),
-        equals(new Version(1, 0, 0, preRelease: <String>["alpha"])));
-    expect(Version.parse("1.0.0+build"),
-        equals(new Version(1, 0, 0, build: "build")));
+    expect(Version.parse("0"), equals(Version(0, 0, 0)));
+    expect(Version.parse("0.0.0"), equals(Version(0, 0, 0)));
+    expect(Version.parse("1"), equals(Version(1, 0, 0)));
+    expect(Version.parse("1.0"), equals(Version(1, 0, 0)));
+    expect(Version.parse("1.2.1"), equals(Version(1, 2, 1)));
+    expect(Version.parse("0.5.3"), equals(Version(0, 5, 3)));
+    expect(Version.parse("0.0.3"), equals(Version(0, 0, 3)));
+    expect(Version.parse("1.2.3.5"), equals(Version(1, 2, 3)));
     expect(
-        Version.parse("1.0.0-alpha+build"),
-        equals(new Version(1, 0, 0,
-            build: "build", preRelease: <String>["alpha"])));
+      Version.parse("99999.55465.5456"),
+      equals(Version(99999, 55465, 5456)),
+    );
     expect(
-        Version.parse("1.0.0-alpha.beta+build"),
-        equals(new Version(1, 0, 0,
-            build: "build", preRelease: <String>["alpha", "beta"])));
+      Version.parse("1.0.0-alpha"),
+      equals(Version(1, 0, 0, preRelease: <String>["alpha"])),
+    );
+    expect(
+      Version.parse("1.0.0+build"),
+      equals(Version(1, 0, 0, build: "build")),
+    );
+    expect(
+      Version.parse("1.0.0-alpha+build"),
+      equals(
+        Version(
+          1,
+          0,
+          0,
+          build: "build",
+          preRelease: <String>["alpha"],
+        ),
+      ),
+    );
+    expect(
+      Version.parse("1.0.0-alpha.beta+build"),
+      equals(
+        Version(
+          1,
+          0,
+          0,
+          build: "build",
+          preRelease: <String>["alpha", "beta"],
+        ),
+      ),
+    );
 
     expect(
-        Version.parse("1.0.0-az.AZ.12-3+az.AZ.12-3"),
-        equals(new Version(1, 0, 0,
-            build: "az.AZ.12-3", preRelease: <String>["az", "AZ", "12-3"])));
+      Version.parse("1.0.0-az.AZ.12-3+az.AZ.12-3"),
+      equals(
+        Version(
+          1,
+          0,
+          0,
+          build: "az.AZ.12-3",
+          preRelease: <String>["az", "AZ", "12-3"],
+        ),
+      ),
+    );
 
     expect(() => Version.parse(null), throwsFormatException);
     expect(() => Version.parse("a"), throwsFormatException);
@@ -273,23 +314,24 @@ void main() {
   });
 
   test("Increment tests", () {
-    expect(new Version(1, 0, 0).incrementMajor(), equals(new Version(2, 0, 0)));
-    expect(new Version(1, 1, 0).incrementMajor(), equals(new Version(2, 0, 0)));
-    expect(new Version(1, 1, 1).incrementMajor(), equals(new Version(2, 0, 0)));
-    expect(new Version(1, 0, 0).incrementMinor(), equals(new Version(1, 1, 0)));
-    expect(new Version(1, 1, 2).incrementMinor(), equals(new Version(1, 2, 0)));
-    expect(new Version(1, 0, 0).incrementPatch(), equals(new Version(1, 0, 1)));
-    expect(new Version(1, 1, 2).incrementPatch(), equals(new Version(1, 1, 3)));
+    expect(Version(1, 0, 0).incrementMajor(), equals(Version(2, 0, 0)));
+    expect(Version(1, 1, 0).incrementMajor(), equals(Version(2, 0, 0)));
+    expect(Version(1, 1, 1).incrementMajor(), equals(Version(2, 0, 0)));
+    expect(Version(1, 0, 0).incrementMinor(), equals(Version(1, 1, 0)));
+    expect(Version(1, 1, 2).incrementMinor(), equals(Version(1, 2, 0)));
+    expect(Version(1, 0, 0).incrementPatch(), equals(Version(1, 0, 1)));
+    expect(Version(1, 1, 2).incrementPatch(), equals(Version(1, 1, 3)));
 
     expect(
-        new Version(1, 1, 1, preRelease: <String>["alpha"], build: "test")
-            .incrementMajor(),
-        equals(new Version(2, 0, 0)));
+      Version(1, 1, 1, preRelease: <String>["alpha"], build: "test")
+          .incrementMajor(),
+      equals(Version(2, 0, 0)),
+    );
   });
 
   test("Comparison tests", () {
-    Version a = new Version(1, 0, 0);
-    Version b = new Version(1, 0, 0);
+    Version a = Version(1, 0, 0);
+    Version b = Version(1, 0, 0);
     expect(a.compareTo(b), equals(0));
     b = b.incrementMinor();
     expect(a.compareTo(b), equals(-1));
@@ -298,21 +340,30 @@ void main() {
   });
 
   test("toString tests", () {
-    expect(new Version(0, 0, 0).toString(), equals("0.0.0"));
-    expect(new Version(1, 0, 0).toString(), equals("1.0.0"));
-    expect(new Version(1, 1, 0).toString(), equals("1.1.0"));
-    expect(new Version(1, 1, 1).toString(), equals("1.1.1"));
-    expect(new Version(1, 0, 1).toString(), equals("1.0.1"));
-    expect(new Version(001, 000, 0010).toString(), equals("1.0.10"));
+    expect(Version(0, 0, 0).toString(), equals("0.0.0"));
+    expect(Version(1, 0, 0).toString(), equals("1.0.0"));
+    expect(Version(1, 1, 0).toString(), equals("1.1.0"));
+    expect(Version(1, 1, 1).toString(), equals("1.1.1"));
+    expect(Version(1, 0, 1).toString(), equals("1.0.1"));
+    expect(Version(001, 000, 0010).toString(), equals("1.0.10"));
     expect(
-        new Version(1, 1, 1, build: "alpha").toString(), equals("1.1.1+alpha"));
+      Version(1, 1, 1, build: "alpha").toString(),
+      equals("1.1.1+alpha"),
+    );
     expect(
-        new Version(1, 1, 1, preRelease: <String>["alpha", "omega"]).toString(),
-        equals("1.1.1-alpha.omega"));
+      Version(1, 1, 1, preRelease: <String>["alpha", "omega"]).toString(),
+      equals("1.1.1-alpha.omega"),
+    );
     expect(
-        new Version(1, 1, 1,
-            build: "alpha", preRelease: <String>["beta", "gamma"]).toString(),
-        equals("1.1.1-beta.gamma+alpha"));
+      Version(
+        1,
+        1,
+        1,
+        build: "alpha",
+        preRelease: <String>["beta", "gamma"],
+      ).toString(),
+      equals("1.1.1-beta.gamma+alpha"),
+    );
   });
 
   test("Pre-release precedence test", () {
@@ -335,63 +386,115 @@ void main() {
       final Version version = versions[i];
       for (int j = 0; j <= i; j++) {
         final Version otherVersion = versions[j];
-        expect(version >= otherVersion, isTrue,
-            reason:
-                "$version should be greater than or equal to $otherVersion");
+        expect(
+          version >= otherVersion,
+          isTrue,
+          reason: "$version should be greater than or equal to $otherVersion",
+        );
         if (j == i) {
-          expect(version > otherVersion, isFalse,
-              reason: "$version should be equal to $otherVersion");
-          expect(version < otherVersion, isFalse,
-              reason: "$version should be equal to $otherVersion");
-          expect(version == otherVersion, isTrue,
-              reason: "$version should be equal to $otherVersion");
-          expect(version <= otherVersion, isTrue,
-              reason: "$version should be equal to $otherVersion");
+          expect(
+            version > otherVersion,
+            isFalse,
+            reason: "$version should be equal to $otherVersion",
+          );
+          expect(
+            version < otherVersion,
+            isFalse,
+            reason: "$version should be equal to $otherVersion",
+          );
+          expect(
+            version == otherVersion,
+            isTrue,
+            reason: "$version should be equal to $otherVersion",
+          );
+          expect(
+            version <= otherVersion,
+            isTrue,
+            reason: "$version should be equal to $otherVersion",
+          );
         } else {
-          expect(version > otherVersion, isTrue,
-              reason: "$version should be greater than $otherVersion");
-          expect(version < otherVersion, isFalse,
-              reason: "$version should be greater than $otherVersion");
-          expect(version == otherVersion, isFalse,
-              reason: "$version should be greater than $otherVersion");
-          expect(version <= otherVersion, isFalse,
-              reason: "$version should be greater than $otherVersion");
+          expect(
+            version > otherVersion,
+            isTrue,
+            reason: "$version should be greater than $otherVersion",
+          );
+          expect(
+            version < otherVersion,
+            isFalse,
+            reason: "$version should be greater than $otherVersion",
+          );
+          expect(
+            version == otherVersion,
+            isFalse,
+            reason: "$version should be greater than $otherVersion",
+          );
+          expect(
+            version <= otherVersion,
+            isFalse,
+            reason: "$version should be greater than $otherVersion",
+          );
         }
       }
 
       for (int j = i; j < versions.length; j++) {
         final Version otherVersion = versions[j];
-        expect(version <= otherVersion, isTrue,
-            reason: "$version should be less than or equal to $otherVersion");
+        expect(
+          version <= otherVersion,
+          isTrue,
+          reason: "$version should be less than or equal to $otherVersion",
+        );
         if (j == i) {
-          expect(version > otherVersion, isFalse,
-              reason: "$version should be equal to $otherVersion");
-          expect(version < otherVersion, isFalse,
-              reason: "$version should be equal to $otherVersion");
-          expect(version == otherVersion, isTrue,
-              reason: "$version should be equal to $otherVersion");
-          expect(version >= otherVersion, isTrue,
-              reason: "$version should be equal to $otherVersion");
+          expect(
+            version > otherVersion,
+            isFalse,
+            reason: "$version should be equal to $otherVersion",
+          );
+          expect(
+            version < otherVersion,
+            isFalse,
+            reason: "$version should be equal to $otherVersion",
+          );
+          expect(
+            version == otherVersion,
+            isTrue,
+            reason: "$version should be equal to $otherVersion",
+          );
+          expect(
+            version >= otherVersion,
+            isTrue,
+            reason: "$version should be equal to $otherVersion",
+          );
         } else {
-          expect(version > otherVersion, isFalse,
-              reason: "$version should be less than $otherVersion");
-          expect(version < otherVersion, isTrue,
-              reason: "$version should be less than $otherVersion");
-          expect(version == otherVersion, isFalse,
-              reason: "$version should be less than $otherVersion");
-          expect(version >= otherVersion, isFalse,
-              reason: "$version should be less than $otherVersion");
+          expect(
+            version > otherVersion,
+            isFalse,
+            reason: "$version should be less than $otherVersion",
+          );
+          expect(
+            version < otherVersion,
+            isTrue,
+            reason: "$version should be less than $otherVersion",
+          );
+          expect(
+            version == otherVersion,
+            isFalse,
+            reason: "$version should be less than $otherVersion",
+          );
+          expect(
+            version >= otherVersion,
+            isFalse,
+            reason: "$version should be less than $otherVersion",
+          );
         }
       }
     }
   });
 
   test("hashCode test", () {
-    final Version versionOne =
-        new Version(1, 0, 0, preRelease: <String>["alpha"]);
+    final Version versionOne = Version(1, 0, 0, preRelease: <String>["alpha"]);
     final Version versionTwo =
-        new Version(1, 0, 0, preRelease: <String>["al", "pha"]);
-    final Version versionThree = new Version(1, 0, 0);
+        Version(1, 0, 0, preRelease: <String>["al", "pha"]);
+    final Version versionThree = Version(1, 0, 0);
 
     expect(versionOne.hashCode != versionTwo.hashCode, isTrue);
     expect(versionTwo.hashCode != versionThree.hashCode, isTrue);
@@ -399,33 +502,37 @@ void main() {
   });
 
   test("isPreRelease test", () {
-    final Version versionOne =
-        new Version(1, 0, 0, preRelease: <String>["alpha"]);
-    final Version versionTwo = new Version(1, 0, 0);
+    final Version versionOne = Version(1, 0, 0, preRelease: <String>["alpha"]);
+    final Version versionTwo = Version(1, 0, 0);
 
     expect(versionOne.isPreRelease, isTrue);
     expect(versionTwo.isPreRelease, isFalse);
   });
 
   test("incrementPreRelease test", () {
-    expect(() => new Version(1, 0, 0).incrementPreRelease(), throwsException);
-
-    expect(new Version(1, 0, 0, preRelease: ["beta"]).incrementPreRelease(),
-        equals(new Version(1, 0, 0, preRelease: ["beta", "1"])));
+    expect(() => Version(1, 0, 0).incrementPreRelease(), throwsException);
 
     expect(
-        new Version(1, 0, 0, preRelease: ["alpha", "3"]).incrementPreRelease(),
-        equals(new Version(1, 0, 0, preRelease: ["alpha", "4"])));
+      Version(1, 0, 0, preRelease: ["beta"]).incrementPreRelease(),
+      equals(Version(1, 0, 0, preRelease: ["beta", "1"])),
+    );
 
     expect(
-        new Version(1, 0, 0, preRelease: ["alpha", "9", "omega"])
-            .incrementPreRelease(),
-        equals(new Version(1, 0, 0, preRelease: ["alpha", "10", "omega"])));
+      Version(1, 0, 0, preRelease: ["alpha", "3"]).incrementPreRelease(),
+      equals(Version(1, 0, 0, preRelease: ["alpha", "4"])),
+    );
 
     expect(
-        new Version(1, 0, 0, preRelease: ["alpha", "9", "omega"])
-                .incrementPreRelease() >
-            new Version(1, 0, 0, preRelease: ["alpha", "9", "omega"]),
-        isTrue);
+      Version(1, 0, 0, preRelease: ["alpha", "9", "omega"])
+          .incrementPreRelease(),
+      equals(Version(1, 0, 0, preRelease: ["alpha", "10", "omega"])),
+    );
+
+    expect(
+      Version(1, 0, 0, preRelease: ["alpha", "9", "omega"])
+              .incrementPreRelease() >
+          Version(1, 0, 0, preRelease: ["alpha", "9", "omega"]),
+      isTrue,
+    );
   });
 }
