@@ -1,4 +1,7 @@
 # Changelog
+## 2.0.1
+- Changed parse function to not accept a null value
+
 ## 2.0.0
 - Updated to comply with Dart null safety
 
