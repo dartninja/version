@@ -1,4 +1,7 @@
 # Changelog
+## 2.0.2
+- Changes for static analysis
+
 ## 2.0.1
 - Changed parse function to not accept a null value
 
