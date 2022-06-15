@@ -1,4 +1,16 @@
 # Changelog
+## 3.0.0
+- Changed parse function to not accept a null value
+
+## 2.0.3
+- Reverted 2.0.1 and 2.0.2 to prevent breaking dependents
+
+## 2.0.2
+- Changes for static analysis
+
+## 2.0.1
+- Changed parse function to not accept a null value
+
 ## 2.0.0
 - Updated to comply with Dart null safety
 
