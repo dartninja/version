@@ -264,6 +264,7 @@ void main() {
         equals(new Version(1, 0, 0,
             build: "az.AZ.12-3", preRelease: <String>["az", "AZ", "12-3"])));
 
+    expect(() => Version.parse(null), throwsFormatException);
     expect(() => Version.parse("a"), throwsFormatException);
     expect(() => Version.parse("123,4322"), throwsFormatException);
     expect(() => Version.parse("123a"), throwsFormatException);

@@ -1,6 +1,6 @@
 name: version
 description: Provides a simple class for parsing and comparing semantic versions as defined by http://semver.org/
-version: 2.0.2
+version: 2.0.3
 homepage: https://github.com/dartninja/version
 
 environment:

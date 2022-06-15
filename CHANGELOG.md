@@ -1,4 +1,7 @@
 # Changelog
+## 2.0.3
+- Reverted 2.0.1 and 2.0.2 to prevent breaking dependents
+
 ## 2.0.2
 - Changes for static analysis
 

@@ -157,11 +157,11 @@ class Version implements Comparable<Version> {
   ///
   /// The string must conform to the specification at http://semver.org/
   /// Throws [FormatException] if the string is empty or does not conform to the spec.
-  static Version parse(String versionString) {
-    if (versionString.trim().isEmpty) {
+  static Version parse(String? versionString) {
+    if (versionString?.trim().isEmpty ?? true) {
       throw FormatException("Cannot parse empty string into version");
     }
-    if (!_versionRegex.hasMatch(versionString)) {
+    if (!_versionRegex.hasMatch(versionString!)) {
       throw FormatException("Not a properly formatted version string");
     }
     final Match m = _versionRegex.firstMatch(versionString)!;
