@@ -1,4 +1,7 @@
 # Changelog
+## 3.0.1
+- Updated readme
+
 ## 3.0.0
 - Changed parse function to not accept a null value
 
