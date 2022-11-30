@@ -251,6 +251,18 @@ class Version implements Comparable<Version> {
     }
     return 0;
   }
+  
+  /// Creates a [Version] instance from a string.
+  ///
+  /// The string must conform to the specification at http://semver.org/
+  /// Returns null if the string is empty or does not conform to the spec.
+  static Version? tryParse(String source) {
+    try {
+      return Version.parse(source);
+    } on FormatException {
+      return null;
+    }
+  }
 
   static bool _isNumeric(String? s) {
     if (s == null) {
