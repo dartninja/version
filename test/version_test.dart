@@ -270,6 +270,43 @@ void main() {
     expect(() => Version.parse("1.0.0+not^safe"), throwsFormatException);
     expect(() => Version.parse("1.0.0-not^safe"), throwsFormatException);
   });
+  
+  
+  test("TryParse tests", () {
+    expect(Version.tryParse("0"), equals(new Version(0, 0, 0)));
+    expect(Version.tryParse("0.0.0"), equals(new Version(0, 0, 0)));
+    expect(Version.tryParse("1"), equals(new Version(1, 0, 0)));
+    expect(Version.tryParse("1.0"), equals(new Version(1, 0, 0)));
+    expect(Version.tryParse("1.2.1"), equals(new Version(1, 2, 1)));
+    expect(Version.tryParse("0.5.3"), equals(new Version(0, 5, 3)));
+    expect(Version.tryParse("0.0.3"), equals(new Version(0, 0, 3)));
+    expect(Version.tryParse("1.2.3.5"), equals(new Version(1, 2, 3)));
+    expect(Version.tryParse("99999.55465.5456"),
+        equals(new Version(99999, 55465, 5456)));
+    expect(Version.tryParse("1.0.0-alpha"),
+        equals(new Version(1, 0, 0, preRelease: <String>["alpha"])));
+    expect(Version.tryParse("1.0.0+build"),
+        equals(new Version(1, 0, 0, build: "build")));
+    expect(
+        Version.tryParse("1.0.0-alpha+build"),
+        equals(new Version(1, 0, 0,
+            build: "build", preRelease: <String>["alpha"])));
+    expect(
+        Version.tryParse("1.0.0-alpha.beta+build"),
+        equals(new Version(1, 0, 0,
+            build: "build", preRelease: <String>["alpha", "beta"])));
+
+    expect(
+        Version.tryParse("1.0.0-az.AZ.12-3+az.AZ.12-3"),
+        equals(new Version(1, 0, 0,
+            build: "az.AZ.12-3", preRelease: <String>["az", "AZ", "12-3"])));
+
+    expect(Version.tryParse("a"), isNull);
+    expect(Version.tryParse("123,4322"), isNull);
+    expect(Version.tryParse("123a"), isNull);
+    expect(Version.tryParse("1.0.0+not^safe"), isNull);
+    expect(Version.tryParse("1.0.0-not^safe"), isNull);
+  });
 
   test("Increment tests", () {
     expect(new Version(1, 0, 0).incrementMajor(), equals(new Version(2, 0, 0)));
