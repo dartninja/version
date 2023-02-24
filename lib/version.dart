@@ -65,27 +65,23 @@ class Version implements Comparable<Version> {
   List<String> get preRelease => List<String>.from(_preRelease);
 
   /// Determines whether the left-hand [Version] represents a lower precedence than the right-hand [Version].
-  bool operator <(dynamic o) => o is Version && _compare(this, o) < 0;
+  bool operator <(Object o) => o is Version && _compare(this, o) < 0;
 
   /// Determines whether the left-hand [Version] represents an equal or lower precedence than the right-hand [Version].
-  bool operator <=(dynamic o) => o is Version && _compare(this, o) <= 0;
+  bool operator <=(Object o) => o is Version && _compare(this, o) <= 0;
 
   /// Determines whether the left-hand [Version] represents an equal precedence to the right-hand [Version].
   @override
-  bool operator ==(dynamic o) => o is Version && _compare(this, o) == 0;
+  bool operator ==(Object o) => o is Version && _compare(this, o) == 0;
 
   /// Determines whether the left-hand [Version] represents a greater precedence than the right-hand [Version].
-  bool operator >(dynamic o) => o is Version && _compare(this, o) > 0;
+  bool operator >(Object o) => o is Version && _compare(this, o) > 0;
 
   /// Determines whether the left-hand [Version] represents an equal or greater precedence than the right-hand [Version].
-  bool operator >=(dynamic o) => o is Version && _compare(this, o) >= 0;
+  bool operator >=(Object o) => o is Version && _compare(this, o) >= 0;
 
   @override
-  int compareTo(Version? other) {
-    if (other == null) {
-      throw ArgumentError.notNull("other");
-    }
-
+  int compareTo(Version other) {
     return _compare(this, other);
   }
 
@@ -188,15 +184,7 @@ class Version implements Comparable<Version> {
         build: build, preRelease: preReleaseList);
   }
 
-  static int _compare(Version? a, Version? b) {
-    if (a == null) {
-      throw ArgumentError.notNull("a");
-    }
-
-    if (b == null) {
-      throw ArgumentError.notNull("b");
-    }
-
+  static int _compare(Version a, Version b) {
     if (a.major > b.major) return 1;
     if (a.major < b.major) return -1;
 
